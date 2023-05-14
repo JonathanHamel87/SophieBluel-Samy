@@ -1,5 +1,6 @@
 // Sélectionner l'élément DOM qui contiendra la galerie
-  const gallery = document.querySelector(".gallery"); 
+const gallery = document.querySelector(".gallery");
+
 //Recuperation des projet via l'API
 fetch("http://localhost:5678/api/works")
   .then(response => response.json())

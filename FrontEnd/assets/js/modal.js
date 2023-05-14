@@ -1,4 +1,3 @@
-import {loadGallery} from "./works";
 // Récupérer la modal
 const modal = document.getElementById("myModal");
 
@@ -21,10 +20,9 @@ const imgButton = document.getElementById("add-imgbutton");
 
 // Fonction pour actualiser la page
 function refreshPage() {
-  //location.reload();
   const mainGallery = document.querySelector('.gallery');
   mainGallery.innerHTML = '';
-  loadGallery();
+  loadGallery(mainGallery);
 }
 
 // Fonction pour supprimer 
@@ -355,6 +353,33 @@ function deleteWork(id) {
       .catch(error => {
         console.error(error);
       });
+}
+
+function loadGallery(mainGallery){
+  fetch("http://localhost:5678/api/works")
+      .then(response => response.json())
+      .then(data => {
+        //Créer un élément figure
+        for (let i = 0; i < data.length; i++) {
+
+          let figure = document.createElement("figure");
+          let img = document.createElement("img");
+          let figcaption = document.createElement("figcaption");
+
+          img.src = data[i].imageUrl;
+          img.alt = data[i].title;
+
+          figcaption.textContent = data[i].title;
+          figure.className = data[i].category.name.replaceAll(' ', '-');
+          figure.setAttribute("data-id", data[i].id); // Ajout de l'attribut data-id
+
+          figure.appendChild(img);
+          figure.appendChild(figcaption);
+
+          mainGallery.appendChild(figure);
+        }
+      })
+      .catch(error => console.error(error));
 }
 
 
