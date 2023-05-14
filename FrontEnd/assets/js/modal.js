@@ -1,3 +1,4 @@
+import {loadGallery} from "./works";
 // Récupérer la modal
 const modal = document.getElementById("myModal");
 
@@ -20,7 +21,10 @@ const imgButton = document.getElementById("add-imgbutton");
 
 // Fonction pour actualiser la page
 function refreshPage() {
-  location.reload();
+  //location.reload();
+  const mainGallery = document.querySelector('.gallery');
+  mainGallery.innerHTML = '';
+  loadGallery();
 }
 
 // Fonction pour supprimer 
@@ -193,23 +197,15 @@ function createGalleryItem(title, imageUrl) {
   img.src = imageUrl;
   img.alt = title;
   deleteIcon.classList.add("fa-solid", "fa-trash-can", "delete-icon");
-  /*deleteIcon.addEventListener("click", function(){
-    deleteWork(this.dataset.id);
-    //Suppression de la figure
-    let figure = this.parentNode.parentNode;
-    figure.parentNode.removeChild(figure);
-  });*/
   deleteIcon.addEventListener("click", DeleteWorkId);
 
-  // Ajouter les éléments créés au DOM
-  figure.appendChild(img);
-  figcaption.textContent = title;
-  figure.appendChild(figcaption);
-  gallery.appendChild(figure);
-
   figcaption.textContent = "éditer";
+  figure.classList.add("figure-modal-add")
+
+  // Ajouter les éléments créés au DOM
   figcaption.appendChild(deleteIcon);
-  figure.classList.add("figure-modal-add");
+  figure.appendChild(img);
+  figure.appendChild(figcaption);
   galleryModal.appendChild(figure);
 }
 
